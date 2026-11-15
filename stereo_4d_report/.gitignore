@@ -1,0 +1,11 @@
+build/*
+!build/.gitkeep
+*.pdf
+*.aux
+*.log
+*.toc
+*.lof
+*.lot
+*.out
+*.synctex.gz
+.DS_Store

@@ -1,0 +1,16 @@
+\chapter{Conclusion and Future Work}
+\section{Conclusion}
+This project has established initial image-based reconstruction prototypes for a bottle, a watch, and an AC remote, and has begun exploring instance segmentation on the project images. The recorded outputs contain 57,600 bottle points, 154,511 points in the combined watch scene, and 170,258 points in the combined remote scene. These outputs demonstrate mask processing, assumed-geometry construction, point-cloud export, and visualization.
+
+The main technical conclusion at this stage is that the distinction between inferred shape and measured depth must remain explicit. Rotational symmetry and selected extrusion heights can create visually complete models without solving stereo correspondence or temporal occlusion. The completed prototypes provide implementation experience and identify capture and segmentation issues, but they do not yet demonstrate stereo-based 4D reconstruction.
+
+The proposed system combines calibrated stereo depth, object identification, reliability checks, rigid-motion alignment, and confidence-aware temporal fusion. Its expected benefit remains a research hypothesis to be tested against a clear-scene baseline and controlled occlusion sequences.
+
+\section{Future Work}
+The immediate priority is to confirm the laboratory camera model, verify paired capture on the Jetson Nano, and document calibration and rectification. A repeatable clear-scene point cloud with known coordinate units is the first geometric milestone. Capture quality and mask-boundary evaluation should proceed alongside this work.
+
+After the baseline is established, matched clear and occluded scenes will quantify depth loss and boundary errors. Confidence and left--right consistency checks will be added separately so their accuracy/coverage trade-off can be measured. Visibility handling should distinguish a temporarily hidden surface from a contradictory new observation.
+
+The temporal stage will estimate rigid target motion, align historical geometry, and introduce confidence weighting, aging, and stale-point rejection. At least one complete visible--occluded--reappearing sequence is required to evaluate recovery. Synthetic ground truth will support controlled measurements, while real-scene tests will assess transfer to the intended tabletop setup.
+
+Finally, held-out comparisons and ablations must report geometric accuracy, coverage, temporal stability, recovery, and latency with explicit hardware and settings. Real-time operation will be claimed only if end-to-end timing supports it. More complex learned completion or implicit temporal representations should follow only after the simpler calibrated pipeline is reproducible and evaluated.

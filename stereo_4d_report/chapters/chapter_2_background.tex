@@ -1,0 +1,51 @@
+\chapter{Literature Review and Technical Background}
+\section{Related Work}
+\subsection{SparseRecon}
+Han et al. propose SparseRecon for sparse-view neural implicit surface reconstruction \cite{sparserecon}. Its cross-view feature-consistency loss constrains geometry through volume rendering, while an uncertainty-guided depth constraint provides additional supervision in occluded or weak-feature regions. This motivates using more than one reliability signal when observations are incomplete. SparseRecon addresses sparse-view surface estimation; its reported contribution does not by itself establish the moving-object temporal pipeline investigated here.
+
+\subsection{3DFIRES}
+Jin, Kulkarni, and Fouhey introduce 3DFIRES for reconstructing scenes, including hidden surfaces, from few posed images \cite{fires}. Multi-view features are fused to produce coherent geometry across views. The distinction between observed and predicted geometry is especially relevant to this project: a hidden surface inferred from learned examples is not a direct depth measurement. The proposed core pipeline instead retains previously observed surfaces when their transformed positions remain credible.
+
+\subsection{NeuSurf}
+Huang et al. use on-surface points obtained from structure from motion to constrain sparse-view neural reconstruction \cite{neusurf}. A global implicit prior guides coarse geometry, and projected-feature consistency refines local structure. The method demonstrates the value of geometric anchors when views are sparse. For the present project, the availability and reliability of such anchors must be checked rather than assumed, especially on reflective or poorly textured objects.
+
+\subsection{NOPE-SAC}
+Tan et al. address two-view planar reconstruction and camera-pose estimation using neural one-plane hypotheses with RANSAC-style reweighting \cite{nope}. Plane correspondences allow pose reasoning when ordinary correspondences are limited. This is relevant to the role of geometric structure in alignment, but its planar setting differs from complete reconstruction of general tabletop objects. It is not adopted as a completed object-motion estimator in this project.
+
+\subsection{Vis-MVSNet}
+Zhang et al. explicitly model pixel-wise visibility through pairwise depth and matching-uncertainty estimation \cite{vis}. Uncertainty guides multi-view cost-volume fusion so that occluded pixels contribute less to the estimate. This provides a direct motivation for confidence-aware handling of stereo evidence. The present proposal uses this principle at the level of reliability filtering and temporal fusion; it does not claim to reproduce the network.
+
+\subsection{SparseNeuS}
+Long et al. introduce SparseNeuS, using signed-distance representations and geometry-encoding volumes for generalizable sparse-view surface reconstruction \cite{sparseneus}. The approach includes consistency-aware fine-tuning to address inconsistent regions associated with noise and occlusion. It supports the importance of consistency checks, while leaving a separate experimental question about maintaining a moving object's geometry across an occlusion-and-reappearance sequence.
+
+\section{Technical Foundations}
+\subsection{Rectified Stereo Geometry}
+For an ideal rectified stereo pair with a common focal length, corresponding points lie on the same image row. Using horizontal pixel coordinates $u_L$ and $u_R$, disparity and depth are related by \cite{opencv}
+\begin{equation}
+d=u_L-u_R,\qquad Z=\frac{fB}{d},
+\label{eq:depth}
+\end{equation}
+where $f$ is the rectified focal length in pixels, $B$ is the baseline, and $Z$ is depth in the same length unit as $B$. Invalid or zero disparity cannot be converted into a finite valid depth. With principal point $(c_x,c_y)$ and rectified intrinsics $(f_x,f_y)$, back-projection is
+\begin{equation}
+X=\frac{(u-c_x)Z}{f_x},\qquad Y=\frac{(v-c_y)Z}{f_y}.
+\end{equation}
+The simplified depth equation assumes rectified coordinates with compatible principal points. The calibrated reprojection matrix should be used when the actual rectification requires offsets.
+
+Differentiating Equation~\ref{eq:depth} gives a first-order sensitivity estimate,
+\begin{equation}
+|\delta Z|\approx\frac{fB}{d^2}|\delta d|.
+\end{equation}
+Thus the same disparity error produces greater depth uncertainty at small disparities. This analytical relationship is not a measured error model for the uncalibrated project camera.
+
+\subsection{Occlusion and Correspondence}
+A valid correspondence requires the same surface to be visible in both cameras. Occlusion can violate that condition even when the surface appears clearly in one image. Matching windows that cross a foreground/background boundary can also combine different surfaces; OpenCV describes boundary speckles and texture-related matching difficulties \cite{opencv}. An object mask identifies the target region, but does not establish binocular visibility or correspondence correctness.
+
+\subsection{Temporal Geometry}
+For a rigid target, a point from a previous frame can be expressed in the current frame by
+\begin{equation}
+\mathbf p_t=\mathbf R_{t\leftarrow t-1}\mathbf p_{t-1}+\mathbf t_{t\leftarrow t-1}.
+\end{equation}
+Rotation and translation must describe object motion in the chosen coordinate convention. Reusing the previous coordinates without this transformation is valid only when the object and reference frame remain stationary. Alignment uncertainty must therefore influence whether history is fused.
+
+\section{Research Gap and Project Direction}
+The reviewed methods provide relevant ideas about sparse observations, visibility, learned priors, and geometric consistency. They do not constitute an evaluation of this project's fixed-stereo moving-object sequence. The project will examine the practical interaction of measurement reliability, rigid alignment, historical-point aging, and recovery after reappearance. This is the project's experimental focus, rather than a claim that the literature has not addressed dynamic reconstruction in general.

@@ -1,0 +1,11 @@
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+\thispagestyle{plain}
+\begin{spacing}{1.5}
+Maintaining a three-dimensional representation of a moving object becomes difficult when an occluder interrupts the observations of a stereo camera. Missing correspondences reduce surface coverage, unreliable matches create boundary artifacts, and motion makes previously reconstructed geometry outdated. This project investigates stereo-based 4D reconstruction, where 4D denotes the evolution of three-dimensional geometry over time, for controlled tabletop scenes.
+
+The proposed method combines stereo calibration and rectification, target-object identification, disparity-based depth estimation, reliability filtering, rigid-motion alignment, and temporal fusion. Historical observations will be retained only when their alignment and confidence support their continued use. Reconstruction accuracy, coverage, temporal stability, recovery after reappearance, and processing time form the planned evaluation criteria.
+
+The completed work consists of three coarse image-based prototypes. A bottle model generated from three segmentation outlines contains 57,600 points and assumes rotational symmetry. Single-view watch and AC remote scenes contain 154,511 and 170,258 combined object-and-background points respectively, using selected object heights and planar supporting surfaces. These experiments demonstrate mask extraction, approximate geometry construction, point-cloud export, and visualization. They do not establish calibrated depth accuracy or temporal occlusion recovery. Instance-segmentation inference has also been tried on project images; robust object-boundary evaluation and stereo integration remain ongoing. The next stage is to establish a calibrated clear-scene stereo baseline before testing partial occlusion and motion-aligned temporal reconstruction.
+\end{spacing}
+\clearpage

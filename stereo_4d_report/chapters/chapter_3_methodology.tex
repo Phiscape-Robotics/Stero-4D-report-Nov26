@@ -1,0 +1,54 @@
+\chapter{Methodology and System Design}
+\section{Requirements}
+The proposed system must acquire paired stereo observations, preserve calibration metadata, identify the target region, estimate disparity, and export current-frame and fused geometry. Each reconstruction should retain its frame identifier and diagnostics so that a failure can be traced to segmentation, matching, alignment, or fusion.
+
+A repeatable evaluation requires fixed camera settings during matched comparisons, identical scene conditions across method variants, and explicit handling of invalid observations. The exact camera model, synchronization behavior, working baseline, image resolution, and accepted operating range remain TBD. Runtime is an evaluation outcome rather than an established real-time capability.
+
+\section{Proposed System}
+The planned processing sequence follows the progress presentation: synchronized capture, calibration and rectification, target detection, disparity and depth estimation, object-motion tracking, temporal fusion, and evaluation. Detection supplies a region of interest. Depth estimation supplies geometric observations and a validity mask. Tracking supplies the transform needed to compare history with the current frame. Fusion combines observations only when those interfaces are reliable.
+
+The system will keep separate current-frame and historical representations. This allows the evaluation to reveal whether apparent coverage is newly measured or merely retained from earlier observations. A point record can store position, color, confidence, observation count, and last-seen frame. Representation details and thresholds will be finalized after the stereo baseline is established.
+
+\section{Materials and Tools}
+The planned hardware platform comprises a Jetson Nano and a Waveshare stereo camera, as identified in the presentation. The camera illustration in the slides is representative; it does not confirm the laboratory camera's exact model. No baseline, synchronization specification, frame rate, or deployed software version is assumed from that image.
+
+The completed prototypes use Python processing scripts, image segmentation, and colored point-cloud export. The bottle experiment records inference with the local \texttt{yolo26n-seg.pt} weights and Open3D output verification. The watch uses deterministic HSV separation; the remote uses GrabCut. These prototype choices do not establish the final embedded stereo software stack.
+
+\section{Proposed Method}
+\subsection{Calibration and Clear Scene Baseline}
+Capture calibration images spanning the intended working volume, estimate both camera intrinsics and their relative pose, and rectify paired images. Save calibration data and inspect reprojection error and residual vertical mismatch. Establish clear-scene disparity and depth before introducing an occluder. The specific matching algorithm remains to be selected and recorded; the report does not assign an untested estimator to the implementation.
+
+\subsection{Object Identification and Reliability Filtering}
+Evaluate instance masks against manually inspected target boundaries. Incorrect classes or incomplete masks should be recorded rather than hidden by favorable selections. The mask should limit the target region while a separate stereo-validity test determines which pixels can produce depth.
+
+For a proposed left--right check, let $d_L$ and $d_R$ both denote positive disparity magnitudes for the corresponding reference images. A candidate residual is
+\begin{equation}
+e_{LR}(u,v)=|d_L(u,v)-d_R(u-d_L(u,v),v)|.
+\end{equation}
+A pixel is accepted only when the mapped location exists, both disparities are valid, and the residual is below a development-set threshold. An implementation that stores right-reference disparities with negative sign must change the comparison accordingly. Boundary exclusion and matching confidence will be evaluated as separate components rather than treated as guaranteed improvements.
+
+\subsection{Motion Alignment and Fusion}
+Transform historical target points into the current reference frame using an estimated rigid transform. Check projected visibility and spatial agreement before association. For compatible current and historical points, a candidate weighted position is
+\begin{equation}
+\mathbf p_f=\frac{w_c\mathbf p_c+w_h\mathbf p_h}{w_c+w_h},\qquad w_c+w_h>0.
+\end{equation}
+This equation specifies a proposed design, not an implemented result. Weights should reflect measurement and alignment confidence. Historical weights may decay with age, but occlusion alone should not be interpreted as proof that a previously observed surface has disappeared. Contradiction after reappearance, excessive age, or uncertain alignment should trigger down-weighting or rejection. Poorly aligned history should not be fused.
+
+\section{Evaluation Plan}
+\subsection{Test Conditions and Comparisons}
+Create matched visible, partially occluded, and reappearance intervals for stationary and moving rigid objects. Quantify occlusion using a consistent reference target projection rather than informal labels alone. Use synthetic scenes for known depth and pose; use real scenes to assess transfer. Split development and test sequences before tuning thresholds.
+
+Compare four configurations: stereo alone, stereo with confidence filtering, stereo with consistency/visibility filtering, and filtering with motion-aligned temporal fusion. Ablations should disable boundary handling, alignment, confidence weighting, or stale-point rejection one at a time. Keep input frames, calibration, and evaluation masks identical across methods.
+
+\subsection{Metrics}
+For $N$ valid predicted depths with ground truth, report
+\begin{equation}
+\operatorname{RMSE}_Z=\sqrt{\frac{1}{N}\sum_{i=1}^{N}(Z_i-\widehat Z_i)^2}.
+\end{equation}
+Report valid-pixel coverage alongside depth error, because a method can lower error by discarding difficult pixels. For geometric evaluation at tolerance $\tau$, compute precision as the fraction of predicted points near the reference surface and recall as the fraction of reference samples near the prediction. Their harmonic mean is
+\begin{equation}
+F_{\tau}=\frac{2P_{\tau}R_{\tau}}{P_{\tau}+R_{\tau}},
+\end{equation}
+with a stated zero-denominator convention. Fix sampling density, coordinate alignment, units, and $\tau$ before test evaluation.
+
+Temporal stability should be evaluated after compensating for true object motion. Recovery time should count frames from reappearance until a predeclared accuracy-and-coverage condition is restored. Also report boundary-region error, retained historical coverage, per-frame processing latency, and hardware settings. Thresholds, dataset size, and acceptance targets remain TBD until development measurements are available.

@@ -1,0 +1,12 @@
+# Stereo 4D project report
+
+Project-specific copy of the Report template. The master template is unchanged.
+
+Build from this folder (create the build directory first if needed):
+
+    mkdir -p build
+    pdflatex -interaction=nonstopmode -halt-on-error -output-directory=build main.tex
+
+Run three times to resolve contents and references. The review copy is `Stereo-Based 4D Scene Reconstruction - Project Report - 16 November 2026.pdf`.
+
+Before submission, confirm the Head of Department, institutional declaration/certificate wording and signatures, and personal acknowledgment. These unknown details remain TBD. The report reflects the progress presentation, not a completed stereo/temporal evaluation. Figures are extracted unchanged from supplied slides 7 and 8. Experiment counts come from the presentation and experiment logs; the original cloud runs were not repeated.

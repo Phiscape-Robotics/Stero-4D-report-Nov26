@@ -1,0 +1,31 @@
+\chapter{Introduction}
+\section{Background}
+Robotic manipulation requires a useful estimate of object shape and position even when the robot's gripper, a hand, a tool, or another object blocks part of the view. A stereo camera offers two observations from which corresponding image locations can be converted into depth. The usefulness of that depth depends on whether the same physical surface is visible and matchable in both cameras. At an occluder boundary, one camera may observe a target surface while the other observes the occluder instead.
+
+This project considers a fixed stereo camera viewing a rigid object in a controlled tabletop scene. The term 4D reconstruction refers to a sequence of 3D reconstructions indexed by time. The task includes maintaining previously observed geometry while the object moves, handling the loss of current observations, and incorporating reliable measurements when a surface reappears. It is therefore broader than completing one static point cloud.
+
+\section{Problem Statement}
+The research problem is to maintain an accurate, useful 3D reconstruction of a moving object as it becomes partially occluded and later reappears. Three linked difficulties are addressed: missing stereo correspondences, unreliable depth near occlusion boundaries, and historical geometry that becomes inconsistent after object motion. Simply accumulating point clouds can preserve incorrect observations or leave multiple copies of a moving surface. Discarding all history avoids accumulation but loses geometry whenever visibility decreases.
+
+The central question is whether reliability filtering and motion-aligned temporal fusion can improve retained geometry during partial occlusion without introducing excessive stale or inaccurate points. A successful assessment must examine both accuracy and completeness, because rejecting uncertain measurements can improve apparent accuracy while reducing useful surface coverage.
+
+\section{Objectives}
+The project objectives are:
+\begin{enumerate}
+\item Establish and document initial image-to-point-cloud prototypes for selected tabletop objects.
+\item Evaluate object identification and boundary extraction on project images.
+\item Calibrate and rectify a stereo pair and obtain a repeatable clear-scene depth baseline.
+\item Quantify reconstruction degradation under controlled partial occlusion.
+\item Investigate confidence, visibility, and stereo-consistency checks for unreliable observations.
+\item Align prior geometry using estimated rigid motion, fuse reliable observations, and reject stale geometry.
+\item Evaluate reconstruction through visible, occluded, and reappearance intervals using geometric and runtime metrics.
+\end{enumerate}
+The first objective has been demonstrated through coarse prototypes. The later objectives remain ongoing or planned; they are not presented as completed experimental results.
+
+\section{Scope and Limitations}
+The intended scope is a fixed calibrated stereo rig, one primary rigid object, and deliberate occlusion in a controlled environment. Synthetic sequences with known geometry are planned for quantitative evaluation, followed by real-scene validation. Offline correctness will be established before assessing a real-time demonstration.
+
+Surfaces that have never been observed cannot be treated as measured stereo geometry. Learned completion, deformable-object reconstruction, multiple independently moving targets, and deployment as a robotic controller are outside the core scope. The existing bottle, watch, and remote prototypes use assumptions about unobserved geometry and do not provide a metric stereo baseline.
+
+\section{Report Organization}
+Chapter 2 reviews the six studies selected in the progress presentation and introduces stereo and temporal-reconstruction concepts. Chapter 3 specifies the proposed system and evaluation protocol. Chapter 4 describes the completed prototype implementations and the planned stereo integration. Chapter 5 presents recorded prototype outputs, their interpretation, and limitations. Chapter 6 concludes with the remaining work needed to demonstrate the project objective.

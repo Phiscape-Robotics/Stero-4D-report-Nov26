@@ -1,0 +1,34 @@
+\chapter{Implementation}
+\section{Implementation Overview}
+The implementation completed so far consists of coarse object-reconstruction experiments and segmentation trials. These establish an image-to-mask-to-cloud workflow before calibrated stereo is introduced. They use different assumptions for different objects and are not interchangeable geometric baselines.
+
+The repository separates processing scripts, notebooks, experiment documentation, raw inputs, and generated outputs. The principal prototype scripts are \texttt{coarse\_\allowbreak bottle\_\allowbreak cloud.py}, \texttt{reconstruct\_\allowbreak watch\_\allowbreak scene.py}, and \texttt{reconstruct\_\allowbreak remote\_\allowbreak scene.py}. An interactive segmentation notebook supports image upload and inspection of instance masks and boundaries. The recorded experiments describe outputs from specific runs; the current report does not claim that these runs were repeated during report preparation.
+
+\section{Input Data and Capture Review}
+The bottle input comprises three phone images at $720\times1280$ pixels, with left/front, center/front, and right/front views. The capture review identifies limited viewpoint coverage, strong compression, a reflective and weakly textured surface, and an attached flexible strap. These conditions restrict correspondence quality and prevent complete observed-surface recovery. The capture was therefore retained for a coarse silhouette experiment rather than accepted as sufficient evidence for metric reconstruction.
+
+For the watch, four full-resolution views were available in the recorded experiment. A near-top image containing the entire watch and a broad table region was selected, then resized from $4096\times2304$ to $1600\times900$. The remote experiment uses a single image resized to a maximum dimension of 1600 pixels. Neither single-view input supplies independently measured depth.
+
+\section{Prototype Processing Pipelines}
+\subsection{Bottle Silhouette Model}
+The bottle pipeline runs instance segmentation on the three images and selects target masks. The experiment accepts both bottle and vase classes because the reflective object is ambiguous to the pretrained model. It keeps the largest connected component and extracts the object width at each normalized image row. The median of the three width profiles reduces the influence of a local protrusion or mask error.
+
+The median profile is revolved about the vertical axis to create the point cloud. This imposes rotational symmetry: rear geometry comes from the model assumption, not from observed stereo correspondences. The recorded cloud uses normalized height 1.0, with width and depth approximately 0.222. No physical bottle height was supplied for that run. Colored points and estimated normals were exported to PLY and read back with Open3D.
+
+\subsection{Watch and Supporting Table}
+The pretrained segmentation trial did not provide a trustworthy complete watch mask, with incorrect semantic labels recorded. The implemented fallback separates the dark/green watch from the light table in HSV space, cleans the largest connected component, and detects the circular case using a Hough transform.
+
+The strap and case are assigned heights 0.010 and 0.028 relative to scene width 1.0. Side-wall points and a planar underside form a shallow object model; the table is a plane at height zero. Texture hidden by the watch is copied from a nearby visible table region. These chosen heights and texture completion create a useful visualization, but do not measure the actual underside or hidden table surface.
+
+\subsection{AC Remote and Supporting Table}
+The remote pipeline initializes GrabCut with a normalized image rectangle and keeps the largest foreground component. The selected visible surface height is 0.035 in arbitrary units. Sampled side walls and a flat underside create a shallow remote model above a planar background. Nearby image rows supply texture for the hidden table region.
+
+The output separates remote-only, background-only, and combined clouds. Maintaining these components separately avoids interpreting the densely sampled background as additional recovered object geometry. The prototype tests mask quality and export behavior; the selected height is not an independently estimated depth.
+
+\section{Segmentation Trials and Stereo Integration}
+YOLO instance-segmentation inference has been tried on project images. The remaining work is to evaluate target identification, mask completeness, and boundary quality systematically. Semantic-class confidence alone cannot establish contour accuracy, and success on the bottle does not establish robustness on the watch or remote.
+
+The planned integration will first verify camera connection and paired capture on the Jetson Nano. Calibration and a clear-scene stereo baseline follow. Target masks will then be associated with rectified frames, taking care that any image remapping is also applied to the masks. Occlusion filtering and temporal history will be added after current-frame geometry can be evaluated reliably.
+
+\section{Reproducibility Records}
+Each future stereo experiment should save input identifiers, calibration version, processing configuration, software revision, hardware, timing convention, and raw metric files. Outputs should include disparity, validity masks, current-frame clouds, and fused clouds. Explicit coordinate systems and physical units are necessary before point clouds from different stages can be compared. Exact deployed dependency versions and laboratory camera specifications remain TBD.

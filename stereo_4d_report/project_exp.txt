@@ -1,0 +1,10 @@
+Project: Stereo-Based 4D Scene Reconstruction Under Partial Occlusion
+Author: Muhammad Salmun, TVE25ECRA15. Guide: Dr. Linu Shine.
+Primary source: presentations/progress/Stereo-Based-4D-Scene-Reconstruction-Under-Partial-Occlusion-Progress-V1R1.pptx
+Supporting evidence: docs/experiments/bottle_capture_01.md, bottle_coarse_cloud_01.md, watch_scene_01.md, remote_scene_01.md; repository README.
+Completed: three coarse image-based prototypes; segmentation inference trials.
+Ongoing: boundary evaluation and stereo foundation. Planned: occlusion handling and temporal fusion.
+Submission date: 16 November 2026 (requested by author).
+Unknown: HoD and coordinator details, approved personal acknowledgment, exact camera model and deployed specifications, calibration results, stereo and temporal metrics.
+Institutional declaration and certificate text retained from the supplied template; approval and signatures remain the author's responsibility.
+Literature: references verified against official proceedings, author manuscripts, and official documentation; Vis-MVSNet is cited using the verified author manuscript rather than an unverified journal citation.

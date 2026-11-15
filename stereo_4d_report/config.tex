@@ -1,0 +1,101 @@
+% Shared packages, project metadata, and document styling.
+% Edit the metadata below for each new report. Keep shared styling here.
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[left=3.5cm,right=3cm,top=2.5cm,bottom=3cm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{enumerate}
+\usepackage{fancyhdr}
+\usepackage{times}
+\renewcommand{\ttdefault}{cmtt}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{float}
+\usepackage{placeins}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=black,
+  citecolor=black,
+  urlcolor=blue,
+  pdftitle={Stereo-Based 4D Scene Reconstruction Under Partial Occlusion},
+  pdfauthor={Muhammad Salmun}
+}
+\urlstyle{same}
+
+% -------------------- Project metadata --------------------
+\newcommand{\ReportTitle}{Stereo-Based 4D Scene Reconstruction Under Partial Occlusion}
+\newcommand{\ReportType}{M.Tech. Project Report}
+\newcommand{\StudentName}{Muhammad Salmun}
+\newcommand{\RegisterNumber}{TVE25ECRA15}
+\newcommand{\DegreeName}{Master of Technology}
+\newcommand{\Specialization}{Robotics and Automation}
+\newcommand{\DepartmentName}{Electronics \& Communication Engineering}
+\newcommand{\CollegeName}{College of Engineering Trivandrum}
+\newcommand{\UniversityName}{APJ Abdul Kalam Technological University}
+\newcommand{\CampusAddress}{Thiruvananthapuram 695016}
+\newcommand{\SubmissionDate}{16 November 2026}
+\newcommand{\GuideName}{Dr. Linu Shine}
+\newcommand{\HeadName}{TBD}
+\newcommand{\CoordinatorOne}{TBD}
+\newcommand{\CoordinatorTwo}{TBD}
+\newcommand{\IndustryName}{ORGANIZATION NAME (IF APPLICABLE)}
+\newcommand{\CollegeEmblem}{figures/cet_logo_1.jpeg}
+\newcommand{\HeaderProjectName}{Stereo-Based 4D Reconstruction}
+\newcommand{\FooterText}{M.Tech. Robotics and Automation | CET}
+
+% -------------------- Page style --------------------
+\setlength{\headheight}{15pt}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\nouppercase{\HeaderProjectName}}
+\fancyhead[R]{\small\nouppercase{\StudentName}}
+\fancyfoot[L]{\small\FooterText}
+\fancyfoot[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+\setlength{\parindent}{2.8em}
+
+% The source template's custom chapter style used \if@mainmatter, which is
+% not defined by the report class. Define it here so chapter headings work.
+\makeatletter
+\newif\if@mainmatter
+\@mainmattertrue
+\def\@makechapterhead#1{%
+  \vspace*{24pt}%
+  {\parindent\z@\centering\normalfont
+   \ifnum\c@secnumdepth>\m@ne
+     \if@mainmatter
+       \fontsize{15.5}{20}\selectfont\bfseries
+       \@chapapp\space\thechapter\par\nobreak
+     \fi
+   \fi
+   \interlinepenalty\@M
+   \fontsize{15.5}{20}\selectfont\bfseries\MakeUppercase{#1}\par\nobreak
+   \vskip 18pt}}
+\def\@makeschapterhead#1{%
+  \vspace*{24pt}%
+  {\parindent\z@\centering\normalfont\interlinepenalty\@M
+   \fontsize{15.5}{20}\selectfont\bfseries\MakeUppercase{#1}\par\nobreak
+   \vskip 18pt}}
+\renewcommand\section{\@startsection{section}{1}{\z@}%
+  {-3.5ex\@plus -1ex\@minus -.2ex}{2.3ex\@plus .2ex}%
+  {\normalfont\fontsize{13.5}{18}\selectfont\bfseries\MakeUppercase}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+  {-3.25ex\@plus -1ex\@minus -.2ex}{1.5ex\@plus .2ex}%
+  {\normalfont\fontsize{12}{14}\selectfont\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+  {-3.25ex\@plus -1ex\@minus -.2ex}{1.5ex\@plus .2ex}%
+  {\normalfont\normalsize}}
+\makeatother
+
+\newcommand{\ReportChapter}[1]{\chapter{#1}}
+
+\emergencystretch=2em
+\widowpenalty=10000
+\clubpenalty=10000
