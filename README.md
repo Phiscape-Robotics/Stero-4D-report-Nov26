@@ -1,6 +1,8 @@
 # Stereo 4D project report
 
-Project-specific copy of the Report template. The master template is unchanged.
+LaTeX project report arranged for direct compilation in Overleaf.
+
+In Overleaf, select `main.tex` at the repository root as the main document and use the pdfLaTeX compiler. All chapters, front matter, figures, and references use paths relative to this root.
 
 Build from this folder (create the build directory first if needed):
 

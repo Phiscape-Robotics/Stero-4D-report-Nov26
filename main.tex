@@ -1,14 +1,32 @@
-\documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-
-\title{Stero-4D-report-Nov26}
-\author{Salmun Phiscape}
-\date{November 2026}
+% LaTeX entry point for the reusable M.Tech project report template.
+\documentclass[a4paper,12pt,oneside]{report}
+\input{config}
 
 \begin{document}
-
-\maketitle
-
-\section{Introduction}
-
+\doublespacing
+\hypersetup{pageanchor=false}
+\input{frontmatter/titlepage}
+\hypersetup{pageanchor=true}
+\pagenumbering{roman}
+\input{frontmatter/declaration}
+\input{frontmatter/certificate}
+\input{frontmatter/acknowledgment}
+\input{frontmatter/abstract}
+\tableofcontents
+\clearpage
+\addcontentsline{toc}{chapter}{List of Figures}
+\listoffigures
+\clearpage
+\addcontentsline{toc}{chapter}{List of Tables}
+\listoftables
+\input{frontmatter/abbreviations}
+\clearpage
+\pagenumbering{arabic}
+\input{chapters/chapter_1_introduction}
+\input{chapters/chapter_2_background}
+\input{chapters/chapter_3_methodology}
+\input{chapters/chapter_4_implementation}
+\input{chapters/chapter_5_results}
+\input{chapters/chapter_6_conclusion}
+\input{references}
 \end{document}
