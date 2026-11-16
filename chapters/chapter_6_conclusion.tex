@@ -7,7 +7,7 @@ The main technical conclusion at this stage is that the distinction between infe
 The proposed system combines calibrated stereo depth, object identification, reliability checks, rigid-motion alignment, and confidence-aware temporal fusion. Its expected benefit remains a research hypothesis to be tested against a clear-scene baseline and controlled occlusion sequences.
 
 \section{Future Work}
-The immediate priority is to confirm the laboratory camera model, verify paired capture on the Jetson Nano, and document calibration and rectification. A repeatable clear-scene point cloud with known coordinate units is the first geometric milestone. Capture quality and mask-boundary evaluation should proceed alongside this work.
+The immediate priority is to verify paired capture and inter-camera timing for the Waveshare IMX219-83 on the Jetson Nano, and document calibration and rectification. A repeatable clear-scene point cloud with known coordinate units is the first geometric milestone. Capture quality and mask-boundary evaluation should proceed alongside this work.
 
 After the baseline is established, matched clear and occluded scenes will quantify depth loss and boundary errors. Confidence and left--right consistency checks will be added separately so their accuracy/coverage trade-off can be measured. Visibility handling should distinguish a temporarily hidden surface from a contradictory new observation.
 

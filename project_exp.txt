@@ -6,7 +6,7 @@ Completed: three coarse image-based prototypes; segmentation inference trials.
 Ongoing: boundary evaluation and stereo foundation. Planned: occlusion handling and temporal fusion.
 Submission date: 16 November 2026 (requested by author).
 HoD: Dr. Shajahan E S, verified November 16, 2026 at https://ece.cet.ac.in/faculty-2/ (Professor & Head).
-Camera: Waveshare stereo camera, confirmed by author; exact model remains unspecified.
-Unknown: coordinator details, exact camera model and deployed specifications, calibration results, stereo and temporal metrics.
+Camera: Waveshare IMX219-83 Stereo Camera, identified by author via Robu product link. Manufacturer specification: dual IMX219 8MP, 3280x2464 per camera, nominal 60 mm baseline, CSI. No hardware synchronization; dynamic capture timing must be validated. Source: https://www.waveshare.com/wiki/IMX219-83_Stereo_Camera
+Unknown: coordinator details, deployed capture settings and measured timing offsets, calibration results, stereo and temporal metrics.
 Institutional declaration and certificate text retained from the supplied template; approval and signatures remain the author's responsibility.
 Literature: references verified against official proceedings, author manuscripts, and official documentation; Vis-MVSNet is cited using the verified author manuscript rather than an unverified journal citation.
