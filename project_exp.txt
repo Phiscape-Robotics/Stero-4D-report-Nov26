@@ -5,6 +5,8 @@ Supporting evidence: docs/experiments/bottle_capture_01.md, bottle_coarse_cloud_
 Completed: three coarse image-based prototypes; segmentation inference trials.
 Ongoing: boundary evaluation and stereo foundation. Planned: occlusion handling and temporal fusion.
 Submission date: 16 November 2026 (requested by author).
-Unknown: HoD and coordinator details, exact camera model and deployed specifications, calibration results, stereo and temporal metrics.
+HoD: Dr. Shajahan E S, verified November 16, 2026 at https://ece.cet.ac.in/faculty-2/ (Professor & Head).
+Camera: Waveshare stereo camera, confirmed by author; exact model remains unspecified.
+Unknown: coordinator details, exact camera model and deployed specifications, calibration results, stereo and temporal metrics.
 Institutional declaration and certificate text retained from the supplied template; approval and signatures remain the author's responsibility.
 Literature: references verified against official proceedings, author manuscripts, and official documentation; Vis-MVSNet is cited using the verified author manuscript rather than an unverified journal citation.

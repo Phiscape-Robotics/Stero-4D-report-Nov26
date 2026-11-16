@@ -10,7 +10,7 @@ The planned processing sequence follows the progress presentation: synchronized 
 The system will keep separate current-frame and historical representations. This allows the evaluation to reveal whether apparent coverage is newly measured or merely retained from earlier observations. A point record can store position, color, confidence, observation count, and last-seen frame. Representation details and thresholds will be finalized after the stereo baseline is established.
 
 \section{Materials and Tools}
-The planned hardware platform comprises a Jetson Nano and a Waveshare stereo camera, as identified in the presentation. The camera illustration in the slides is representative; it does not confirm the laboratory camera's exact model. No baseline, synchronization specification, frame rate, or deployed software version is assumed from that image.
+The hardware platform comprises a Jetson Nano and a Waveshare stereo camera. The camera manufacturer and stereo configuration are confirmed; its exact model and operating specifications have not yet been recorded. The illustration in the progress presentation is representative and is not used to assign the laboratory unit a baseline, synchronization specification, frame rate, or software version.
 
 The completed prototypes use Python processing scripts, image segmentation, and colored point-cloud export. The bottle experiment records inference with the local \texttt{yolo26n-seg.pt} weights and Open3D output verification. The watch uses deterministic HSV separation; the remote uses GrabCut. These prototype choices do not establish the final embedded stereo software stack.
 
